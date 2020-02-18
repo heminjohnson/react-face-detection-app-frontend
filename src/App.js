@@ -40,7 +40,7 @@ function App() {
     const clarifaiFace =
       data.outputs[0].data.regions[0].region_info.bounding_box;
 
-    const image = document.getElementById("inputimage");
+    const image = document.getElementById("inputImage");
     const width = Number(image.width);
     const height = Number(image.height);
 
@@ -74,7 +74,7 @@ function App() {
         onInputChange={onInputChange}
         onButtonSubmit={onButtonSubmit}
       />
-      {imageUrl && <FaceRecognition imageUrl={imageUrl} />}
+      {imageUrl && <FaceRecognition imageUrl={imageUrl} box={box} />}
     </div>
   );
 }
