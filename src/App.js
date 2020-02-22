@@ -10,6 +10,7 @@ import Logo from "./components/Logo/logo";
 import ImageLinkForm from "./components/ImageLinkForm/imageLinkForm";
 import Rank from "./components/Rank/rank";
 import FaceRecognition from "./components/FaceRecognition/faceRecognition";
+import SignIn from "./components/SignIn/signIn";
 
 const particleOptions = {
   particles: {
@@ -68,6 +69,7 @@ function App() {
     <div className="App">
       <Particles className="particles" params={particleOptions} />
       <Navigation />
+      <SignIn />
       <Logo />
       <Rank />
       <ImageLinkForm
