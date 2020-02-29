@@ -35,6 +35,17 @@ function App() {
   const [box, setBox] = useState({});
   const [route, setRoute] = useState("signIn");
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [user, setUser] = useState({
+    id: "",
+    name: "",
+    email: "",
+    entries: 0,
+    joined: ""
+  });
+
+  const loadUser = userData => {
+    setUser(userData);
+  };
 
   const onInputChange = event => {
     setInput(event.target.value);
@@ -94,7 +105,7 @@ function App() {
           {imageUrl && <FaceRecognition imageUrl={imageUrl} box={box} />}
         </>
       ) : (
-        <Register onRouteChange={onRouteChange} />
+        <Register loadUser={loadUser} onRouteChange={onRouteChange} />
       )}
     </div>
   );
