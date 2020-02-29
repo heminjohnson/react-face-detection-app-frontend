@@ -1,6 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Register = ({ onRouteChange }) => {
+  const [registerData, setRegisterData] = useState({
+    email: "",
+    password: "",
+    name: ""
+  });
+
+  const onEmailChange = event => {
+    setRegisterData({
+      ...registerData,
+      email: event.target.value
+    });
+  };
+
+  const onPasswordChange = event => {
+    setRegisterData({
+      ...registerData,
+      password: event.target.value
+    });
+  };
+
+  const onNameChange = event => {
+    setRegisterData({
+      ...registerData,
+      name: event.target.value
+    });
+  };
+
+  const onSubmitRegister = () => {
+    fetch("http://localhost:4000/register", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(registerData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data === "success") {
+          onRouteChange("home");
+        }
+      });
+  };
+
   return (
     <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
       <main className="pa4 black-80">
@@ -16,6 +57,7 @@ const Register = ({ onRouteChange }) => {
                 type="text"
                 name="name"
                 id="name"
+                onChange={onNameChange}
               />
             </div>
             <div className="mt3">
@@ -27,6 +69,7 @@ const Register = ({ onRouteChange }) => {
                 type="email"
                 name="email-address"
                 id="email-address"
+                onChange={onEmailChange}
               />
             </div>
             <div className="mv3">
@@ -38,12 +81,13 @@ const Register = ({ onRouteChange }) => {
                 type="password"
                 name="password"
                 id="password"
+                onChange={onPasswordChange}
               />
             </div>
           </fieldset>
           <div className="">
             <input
-              onClick={() => onRouteChange("home")}
+              onClick={onSubmitRegister}
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Register"
