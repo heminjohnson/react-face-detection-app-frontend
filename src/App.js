@@ -35,6 +35,17 @@ function App() {
   const [box, setBox] = useState({});
   const [route, setRoute] = useState("signIn");
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [user, setUser] = useState({
+    id: "",
+    name: "",
+    email: "",
+    entries: 0,
+    joined: ""
+  });
+
+  const loadUser = userData => {
+    setUser(userData);
+  };
 
   const onInputChange = event => {
     setInput(event.target.value);
@@ -69,11 +80,22 @@ function App() {
     setBox(box);
   };
 
-  const onButtonSubmit = () => {
+  const onPictureSubmit = () => {
     setImageUrl(input);
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, input)
-      .then(response => displayFaceBox(calculateFaceLocation(response)))
+      .then(response => {
+        if (response) {
+          fetch("http://localhost:4000/image", {
+            method: "put",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: user.id })
+          })
+            .then(response => response.json())
+            .then(count => setUser({ ...user, entries: count }));
+        }
+        displayFaceBox(calculateFaceLocation(response));
+      })
       .catch(err => console.log(err));
   };
 
@@ -86,15 +108,15 @@ function App() {
       ) : route === "home" ? (
         <>
           <Logo />
-          <Rank />
+          <Rank name={user.name} count={user.entries} />
           <ImageLinkForm
             onInputChange={onInputChange}
-            onButtonSubmit={onButtonSubmit}
+            onPictureSubmit={onPictureSubmit}
           />
           {imageUrl && <FaceRecognition imageUrl={imageUrl} box={box} />}
         </>
       ) : (
-        <Register onRouteChange={onRouteChange} />
+        <Register loadUser={loadUser} onRouteChange={onRouteChange} />
       )}
     </div>
   );
