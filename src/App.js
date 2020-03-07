@@ -104,7 +104,7 @@ function App() {
       <Particles className="particles" params={particleOptions} />
       <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
       {route === "signIn" ? (
-        <SignIn onRouteChange={onRouteChange} />
+        <SignIn loadUser={loadUser} onRouteChange={onRouteChange} />
       ) : route === "home" ? (
         <>
           <Logo />
