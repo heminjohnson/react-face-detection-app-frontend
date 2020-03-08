@@ -25,7 +25,7 @@ const SignIn = ({ onRouteChange, loadUser }) => {
     })
       .then(response => response.json())
       .then(data => {
-        if (data !== "wrong credentials") {
+        if (data.id) {
           loadUser(data);
           onRouteChange("home");
         }
