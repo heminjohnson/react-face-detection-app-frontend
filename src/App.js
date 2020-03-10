@@ -96,7 +96,7 @@ function App() {
       .predict(Clarifai.FACE_DETECT_MODEL, input)
       .then(response => {
         if (response) {
-          fetch("http://localhost:4000/image", {
+          fetch(`${process.env.REACT_APP_BACKEND_URL}/image`, {
             method: "put",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: user.id })
