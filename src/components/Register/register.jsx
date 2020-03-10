@@ -29,14 +29,14 @@ const Register = ({ onRouteChange, loadUser }) => {
   };
 
   const onSubmitRegister = () => {
-    fetch("http://localhost:4000/register", {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/register`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(registerData)
     })
       .then(response => response.json())
       .then(data => {
-        if (data) {
+        if (data.id) {
           loadUser(data);
           onRouteChange("home");
         }

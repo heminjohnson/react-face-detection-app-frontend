@@ -18,14 +18,14 @@ const SignIn = ({ onRouteChange, loadUser }) => {
   };
 
   const onSubmitSignIn = () => {
-    fetch("http://localhost:4000/signin", {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/signin`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(signInData)
     })
       .then(response => response.json())
       .then(data => {
-        if (data !== "wrong credentials") {
+        if (data.id) {
           loadUser(data);
           onRouteChange("home");
         }
